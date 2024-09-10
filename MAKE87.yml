@@ -2,6 +2,9 @@ build_kit:
   name: python3
   version: latest
 topics:
-  - name: INCOMING_MESSAGE
-    message_type: make87.text.PlainText.PlainText
+  - name: JPEG_INPUT
+    message_type: make87.image.ImageJPEG.ImageJPEG
     type: SUB
+  - name: JPEG_OUTPUT
+    message_type: make87.image.ImageJPEG.ImageJPEG
+    type: PUB

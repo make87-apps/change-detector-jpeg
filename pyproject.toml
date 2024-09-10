@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sample_app"
+name = "change-detector-jpeg"
 version = "0.0.1"
 authors = [
     { name = "Nisse Knudsen", email = "nisse.knudsen@gmail.com" },
@@ -11,6 +11,8 @@ authors = [
 dependencies = [
     "make87",
     "make87_messages",
+    "numpy",
+    "opencv-python-headless",
 ]
 description = "A small example package"
 readme = "README.md"
