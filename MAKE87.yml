@@ -1,0 +1,7 @@
+build_kit:
+  name: python3
+  version: latest
+topics:
+  - name: INCOMING_MESSAGE
+    message_type: make87.text.PlainText.PlainText
+    type: SUB

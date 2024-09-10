@@ -1,0 +1,2 @@
+# Subscriber Template for Python
+
