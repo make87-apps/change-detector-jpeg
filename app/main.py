@@ -1,7 +1,9 @@
+import logging
+
 import cv2
 import numpy as np
 from make87_messages.image.ImageJPEG_pb2 import ImageJPEG
-from make87 import get_topic, topic_names, SubscriberTopic, PublisherTopic
+from make87 import get_topic, topic_names, SubscriberTopic, PublisherTopic, MessageMetadata
 
 
 class ImageChangeDetector:
@@ -43,12 +45,12 @@ def main():
     input_topic = get_topic(name=topic_names.JPEG_INPUT)
     detector = ImageChangeDetector()
 
-    def callback(message: ImageJPEG):
+    def callback(message: ImageJPEG, metadata: MessageMetadata):
         change_detected, new_image_data = detector.process_image_change(message.data)
         if change_detected:
             new_message = ImageJPEG(data=new_image_data)
             detector.output_topic.publish(new_message)
-            print("Detected change and forwarded image.")
+            logging.info("Detected change and forwarded image.")
 
     input_topic.subscribe(callback)
 
