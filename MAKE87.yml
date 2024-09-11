@@ -1,10 +1,9 @@
 build_kit:
   name: python3
   version: latest
-topics:
+inbound_topics:
   - name: JPEG_INPUT
     message_type: make87.image.ImageJPEG.ImageJPEG
-    type: SUB
+outbound_topics:
   - name: JPEG_OUTPUT
     message_type: make87.image.ImageJPEG.ImageJPEG
-    type: PUB
