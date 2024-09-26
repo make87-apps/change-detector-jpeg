@@ -3,7 +3,7 @@ build_kit:
   version: latest
 inbound_topics:
   - name: JPEG_INPUT
-    message_type: make87.image.ImageJPEG.ImageJPEG
+    message_type: make87_messages.image.compressed.image_jpeg.ImageJPEG
 outbound_topics:
   - name: JPEG_OUTPUT
-    message_type: make87.image.ImageJPEG.ImageJPEG
+    message_type: make87_messages.image.compressed.image_jpeg.ImageJPEG
