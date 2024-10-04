@@ -3,7 +3,7 @@ import logging
 import cv2
 import numpy as np
 from make87_messages.image.compressed.image_jpeg_pb2 import ImageJPEG
-from make87 import get_topic, topic_names, SubscriberTopic, PublisherTopic, MessageMetadata
+from make87 import get_topic, topic_names, MessageMetadata, initialize
 
 
 class ImageChangeDetector:
@@ -42,6 +42,8 @@ class ImageChangeDetector:
 
 
 def main():
+    initialize()
+
     input_topic = get_topic(name=topic_names.JPEG_INPUT)
     detector = ImageChangeDetector()
 
