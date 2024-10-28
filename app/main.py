@@ -3,13 +3,14 @@ import logging
 import cv2
 import numpy as np
 from make87_messages.image.compressed.image_jpeg_pb2 import ImageJPEG
-from make87 import get_topic, topic_names, MessageMetadata, initialize
+from make87 import initialize, get_publisher_topic, get_subscriber_topic, resolve_topic_name
 
 
 class ImageChangeDetector:
     def __init__(self):
         self.previous_image_data = None
-        self.output_topic = get_topic(name=topic_names.JPEG_OUTPUT)
+        topic_name = resolve_topic_name(name="JPEG_OUTPUT")
+        self.output_topic = get_publisher_topic(name=topic_name, message_type=ImageJPEG)
 
     def process_image_change(self, current_image_data):
         if self.previous_image_data is None:
@@ -44,10 +45,11 @@ class ImageChangeDetector:
 def main():
     initialize()
 
-    input_topic = get_topic(name=topic_names.JPEG_INPUT)
+    topic_name = resolve_topic_name("JPEG_INPUT")
+    input_topic = get_subscriber_topic(name=topic_name, message_type=ImageJPEG)
     detector = ImageChangeDetector()
 
-    def callback(message: ImageJPEG, metadata: MessageMetadata):
+    def callback(message: ImageJPEG):
         change_detected, new_image_data = detector.process_image_change(message.data)
         if change_detected:
             new_message = ImageJPEG(data=new_image_data)
