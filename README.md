@@ -1,2 +1,1 @@
-# Subscriber Template for Python
-
+# Change Detector in JPEG Images
