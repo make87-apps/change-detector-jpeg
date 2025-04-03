@@ -2,8 +2,8 @@ import logging
 
 import cv2
 import numpy as np
+import make87
 from make87_messages.image.compressed.image_jpeg_pb2 import ImageJPEG
-from make87 import initialize, get_publisher, get_subscriber
 
 
 class ImageChangeDetector:
@@ -13,7 +13,7 @@ class ImageChangeDetector:
     def process_image_change(self, current_image_data):
         if self.previous_image_data is None:
             self.previous_image_data = current_image_data
-            return False, None
+            return False
 
         # Compare the current and the previous image
         current_image = cv2.cvtColor(
@@ -36,24 +36,26 @@ class ImageChangeDetector:
 
         if change_fraction > 0.3:
             self.previous_image_data = current_image_data
-            return True, current_image_data
-        return False, None
+            return True
+        return False
 
 
 def main():
-    initialize()
+    make87.initialize()
 
-    input_topic = get_subscriber(name="JPEG_INPUT", message_type=ImageJPEG)
-    output_topic = get_publisher(name="JPEG_OUTPUT", message_type=ImageJPEG)
+    input_topic = make87.get_subscriber(name="JPEG_INPUT", message_type=ImageJPEG)
+    output_topic = make87.get_publisher(name="JPEG_OUTPUT", message_type=ImageJPEG)
     detector = ImageChangeDetector()
 
     def callback(message: ImageJPEG):
-        change_detected, new_image_data = detector.process_image_change(message.data)
+        change_detected = detector.process_image_change(message.data)
         if change_detected:
             output_topic.publish(message)
             logging.info("Detected change and forwarded image.")
 
     input_topic.subscribe(callback)
+    make87.loop()
+
 
 
 if __name__ == "__main__":
